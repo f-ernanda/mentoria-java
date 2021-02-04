@@ -4,7 +4,10 @@ import java.util.Arrays;
 
 public enum Options {
     ADD("1"),
-    EXIT("2"),
+    READ("2"),
+    UPDATE("3"),
+    DELETE("4"),
+    EXIT("X"),
     UNKNOWN("-100");
 
     private final String value;
