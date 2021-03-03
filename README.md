@@ -43,8 +43,7 @@ Além dos parâmetros, uma função por excelência retorna algo, e é assim que
 Se possível, que ela não altere nada fora do seu escopo, ou seja, que ela não cause efeitos colaterais.
 
 ### Comentários
-Os comentários devem ser evitados a todo custo. 
-São práticas ruins de programação, e se existem, normalmente algo no código não está correto.
+Comentários podem ser utilizados, mas com exceção de situações específicas, devem ser evitados, pois geralmente indicam algo errado no código.
 Ou um método que está fazendo mais coisas do que devia, ou uma variável com um nome ruim, ou uma lógica que não faz sentido.
 Explicar esses porblemas com comentários, além de não resolver o problema em si, pode trazer consequências piores.
 Um comentário pode não evoluir conforme o código evolui, deixando-o desatualizado e por muitas vezes, deslocado do código.
@@ -54,6 +53,21 @@ Mas há situações que um comentário pode ajudar um código que já é bem esc
 Podem explicar a importância de um ponto do código, ou trazer informações de caráter legal, ou ainda prevenir que algumas coisas sejam executadas ou modificadas.
 Porém, no geral, ainda é possível melhorar o código para evitar tais situações, e deixá-lo mais limpo como consequência.
 Importante salientar que é possível comentar trechos de códigos, porém só deixam o código mais poluído e trazem dúvidas a quem vai ler, portanto essa prática também deve ser evitada.
+
+
+### Formatação
+Neste capítulo ficou claro qual é o principal trabalho de um desenvolvedor: a comunicação. 
+A formatação ajuda a melhorar essa comunicação entre desenvolvedores, e pode ser dividida em formatação vertical e horizontal.
+A formatação vertical diz respeito a quantidade de linhas e o agrupamento em blocos.
+A quantidade de linhas, em termos gerais, reflete no tamanho que um arquivo possui. 
+Um arquivo mais leve geralmente é preferível, e facilita a leitura e entendimento do código.
+Já o agrupamento, pode ser feito de diversas maneiras. 
+Uma boa prática é separar por uma linha em branco pedaços de código que refletem um pensamento, e deixar blocos afins ou relacionados próximos no arquivo.
+
+Já a formatação horizontal é relacionada com a quantidade de caracteres presentes em uma linha, e espaçamentos entre termos.
+Um número sugerido de caracteres por linha gira em torno de 120, pois linhas longas são incômodas de ler e geram um scroll horizontal.
+Já o espaçamento, apesar de não ser regra, é recomendado deixar termos que são separados com espaço, como uma atribuição e o operador, e termos afins sem espaços, como os parênteses e a palavra reservada `for`.
+Outra questão de espaçamentos é a indetação, que auxilia entender a hierarquia de um código, e facilita sua assimilação.
 
 
 ## Para executar o programa

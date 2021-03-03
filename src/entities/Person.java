@@ -2,20 +2,26 @@ package entities;
 
 public class Person {
 
+    private final int id;
     private String name;
-    private final String cpf;
+    private String cpf;
 
-    public Person(String name, String cpf) {
+    public Person(int id) {
+        this.id = id;
+    }
+
+    public Person(int id, String name, String cpf) {
+        this.id = id;
         this.name = name;
         this.cpf = cpf;
     }
 
-    public String getName() {
-        return name;
+    public int getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getName() {
+        return name;
     }
 
     public String getCpf() {

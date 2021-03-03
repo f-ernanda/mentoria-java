@@ -1,36 +1,36 @@
 package application;
 
+import crud.*;
 import entities.Person;
 import entities.enums.Options;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Program {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         Scanner userInput = new Scanner(System.in);
 
-        ArrayList<Person> peopleList = new ArrayList<Person>();
+        Create createPerson = new Create();
+        Read readTable = new Read();
+        Update updatePerson = new Update();
+        Delete deletePerson = new Delete();
+
         String name, cpf;
-        int index;
+        int id;
+
 
         boolean isAdding = true;
 
         do{
-            if(peopleList.isEmpty()) {
-                System.out.println("Digite a opção desejada: ");
-                System.out.println("1 - Adicionar uma pessoa");
-                System.out.println("X - Sair");
-            } else {
-                System.out.println("Digite a opção desejada: ");
-                System.out.println("1 - Adicionar uma pessoa");
-                System.out.println("2 - Listar pessoas cadastradas");
-                System.out.println("3 - Atualizar dados de uma pessoa");
-                System.out.println("4 - Excluir uma pessoa");
-                System.out.println("X - Sair");
-            }
+            System.out.println("Digite a opção desejada: ");
+            System.out.println("1 - Adicionar uma pessoa");
+            System.out.println("2 - Listar pessoas cadastradas");
+            System.out.println("3 - Atualizar dados de uma pessoa");
+            System.out.println("4 - Excluir uma pessoa");
+            System.out.println("X - Sair");
 
             Options chosenOption = Options.fromValue(userInput.nextLine());
             System.out.println();
@@ -39,25 +39,8 @@ public class Program {
                 case ADD:
                     System.out.println("Insira os dados da pessoa: ");
 
-                    System.out.print("Nome: ");
-                    name = userInput.nextLine();
-
-
-                    System.out.print("CPF: ");
-                    cpf = userInput.nextLine();
-                    System.out.println();
-
-                    peopleList.add(new Person(name, cpf));
-                    break;
-
-                case READ:
-                    readPeopleList(peopleList);
-                    break;
-
-                case UPDATE:
-                    System.out.println("Insira a posição da pessoa a ser atualizada: ");
-                    readPeopleList(peopleList);
-                    index = userInput.nextInt() - 1;
+                    System.out.print("ID: ");
+                    id = userInput.nextInt();
 
                     System.out.print("Nome: ");
                     userInput.nextLine();
@@ -68,17 +51,39 @@ public class Program {
                     cpf = userInput.nextLine();
                     System.out.println();
 
-                    peopleList.set(index, new Person(name, cpf));
+                    createPerson.createRecord(new Person(id, name, cpf));
+                    break;
+
+                case READ:
+                    readTable.readRecord();
+
+                    break;
+
+                case UPDATE:
+                    System.out.println("Insira o id da pessoa a ser atualizada: ");
+                    readTable.readRecord();
+
+                    id = userInput.nextInt();
+
+                    System.out.print("Nome: ");
+                    userInput.nextLine();
+                    name = userInput.nextLine();
+
+                    System.out.print("CPF: ");
+                    cpf = userInput.nextLine();
+                    System.out.println();
+
+                    updatePerson.updateRecord(new Person(id, name, cpf));
                     break;
 
                 case DELETE:
-                    System.out.println("Insira a posição da pessoa a ser removida: ");
-                    readPeopleList(peopleList);
-                    index = userInput.nextInt() - 1;
+                    System.out.println("Insira o id da pessoa a ser removida: ");
+                    readTable.readRecord();
+                    id = userInput.nextInt();
 
                     System.out.println();
 
-                    peopleList.remove(index);
+                    deletePerson.deleteRecord(id);
                     userInput.nextLine();
                     break;
 
@@ -96,15 +101,6 @@ public class Program {
 
         userInput.close();
 
-
-    }
-
-    private static void readPeopleList(ArrayList<Person> peopleList) {
-        System.out.println("Lista de pessoas cadastradas: ");
-        for (int i = 0; i < peopleList.size(); i++) {
-            System.out.println("Posição " + (i + 1) + " - " + peopleList.get(i));
-        }
-        System.out.println();
     }
 
 }
