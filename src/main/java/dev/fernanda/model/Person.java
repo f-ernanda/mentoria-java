@@ -1,13 +1,12 @@
-package entities;
+package dev.fernanda.model;
 
 public class Person {
 
-    private final int id;
+    private int id;
     private String name;
     private String cpf;
 
-    public Person(int id) {
-        this.id = id;
+    public Person() {
     }
 
     public Person(int id, String name, String cpf) {
@@ -20,17 +19,29 @@ public class Person {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCpf() {
         return cpf;
     }
 
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
     @Override
     public String toString() {
-        return "Nome: " + name + ", CPF: " + cpf + "; ";
+        return "ID: " + id +  ", nome: " + name + ", CPF: " + cpf + "; ";
     }
 
 }

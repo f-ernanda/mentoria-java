@@ -3,11 +3,7 @@
 ## Como está o programa
 
 O programa dá a possibilidade ao usuário de adicionar, exibir, atualizar e remover uma pessoa com nome e CPF cadastrados.
-As informações gravadas não são persistentes, ou seja, cada vez que o programa é iniciado, a lista está vazia.
-
-## O que aprendi nessa semana
-
-* 04/02 - Aprendi a lidar melhor com ArrayList, criei um método privado para iterar sobre a lista e exibir seu conteúdo, deixando o código mais limpo, e explorei um pouco a diferença entre classes e interfaces em uma tentativa de otimizar o código.
+As informações gravadas são persistentes, e foi usado o JDBC Template para a conexão com o banco de dados.
 
 ## Resumo do livro Clean Code
 
@@ -54,7 +50,6 @@ Podem explicar a importância de um ponto do código, ou trazer informações de
 Porém, no geral, ainda é possível melhorar o código para evitar tais situações, e deixá-lo mais limpo como consequência.
 Importante salientar que é possível comentar trechos de códigos, porém só deixam o código mais poluído e trazem dúvidas a quem vai ler, portanto essa prática também deve ser evitada.
 
-
 ### Formatação
 Neste capítulo ficou claro qual é o principal trabalho de um desenvolvedor: a comunicação. 
 A formatação ajuda a melhorar essa comunicação entre desenvolvedores, e pode ser dividida em formatação vertical e horizontal.
@@ -69,11 +64,12 @@ Um número sugerido de caracteres por linha gira em torno de 120, pois linhas lo
 Já o espaçamento, apesar de não ser regra, é recomendado deixar termos que são separados com espaço, como uma atribuição e o operador, e termos afins sem espaços, como os parênteses e a palavra reservada `for`.
 Outra questão de espaçamentos é a indetação, que auxilia entender a hierarquia de um código, e facilita sua assimilação.
 
+### Objetos e estruturas de dados
 
-## Para executar o programa
-```shell script
-git clone https://github.com/f-ernanda/mentoria-java.git
-cd src
-javac -cp . application/*.java
-java -cp . application/Program
-```
+### Tratamento de erros
+
+### Limites
+
+### Testes unitários
+
+### Classes

@@ -1,12 +1,13 @@
-package entities.enums;
+package dev.fernanda.model.enums;
 
 import java.util.Arrays;
 
 public enum Options {
-    ADD("1"),
+    CREATE("1"),
     READ("2"),
-    UPDATE("3"),
-    DELETE("4"),
+    READ_ALL("3"),
+    UPDATE("4"),
+    DELETE("5"),
     EXIT("X"),
     UNKNOWN("-100");
 
