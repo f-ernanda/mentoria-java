@@ -1,17 +1,18 @@
 package dev.fernanda;
 
 import dev.fernanda.model.Person;
-import dev.fernanda.spring.config.AppConfig;
-import dev.fernanda.spring.dao.PersonDAO;
+import dev.fernanda.config.DBConfig;
+import dev.fernanda.dao.PersonDAO;
 import dev.fernanda.model.enums.Options;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DBConfig.class);
         Scanner userInput = new Scanner(System.in);
 
         PersonDAO personDAO = context.getBean(PersonDAO.class);
@@ -121,5 +122,8 @@ public class Main {
 
         userInput.close();
         context.close();
+
     }
+
+
 }

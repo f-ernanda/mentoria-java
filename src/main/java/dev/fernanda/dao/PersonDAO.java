@@ -1,4 +1,4 @@
-package dev.fernanda.spring.dao;
+package dev.fernanda.dao;
 
 import dev.fernanda.model.Person;
 import dev.fernanda.model.PersonMapper;
@@ -10,12 +10,12 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @Component
-public class PersonDAOImpl implements PersonDAO {
+public class PersonDAO {
 
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public PersonDAOImpl(DataSource dataSource) {
+    public PersonDAO(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

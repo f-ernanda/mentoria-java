@@ -1,4 +1,4 @@
-package dev.fernanda.spring.config;
+package dev.fernanda.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,9 +10,9 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan("dev.fernanda.spring")
+@ComponentScan("dev.fernanda")
 @PropertySource("classpath:database.properties")
-public class AppConfig {
+public class DBConfig {
 
     @Value("${driver}")
     private String driver;
