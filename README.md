@@ -65,11 +65,34 @@ Já o espaçamento, apesar de não ser regra, é recomendado deixar termos que s
 Outra questão de espaçamentos é a indetação, que auxilia entender a hierarquia de um código, e facilita sua assimilação.
 
 ### Objetos e estruturas de dados
+Uma importante diferença entre objetos e estruturas é com cada um lida com a exposição dos seus dados.
+Um objeto esconde os dados por meio de abstrações e expõe funções para trabalhar com esses dados. 
+Isso permite com que o usuário manipule a essência do dado, sem saber as suas implementações.
+A programação orientada a objetos tem a abstração como um dos seus pilares.
+
+Já nas estruturas, os dados são expostos, e nenhuma função significativa é implementada.
+As estruturas são pensadas de uma maneira procedural, e neste paradigma, é mais fácil adicionar novas funções sem mexer nas estruturas já existentes.
+Contudo, é mais difícil para adicionar novas estruturas, já que todas as funções devem ser adaptadas.
+
+E qual usar? Como sempre, depende. Há situações que é preciso flexibilidade para adicionar novos dados, então objetos são preferíveis. 
+Mas também haverá situações que novos comportamentos serão mais frequentes, então uma abordagem procedural é mais eficiente.
+O único conselho é não misturar os paradigmas em uma mesma estrutura, pois dificultará a adição de qualquer coisa no programa.
 
 ### Tratamento de erros
+O tratamento de erros deve ser planejado com cuidado pelos programadores, já que pode obstruir a lógica do programa se usado em excesso.
+Eles devem existir em situações que façam sentido, e sempre da melhor maneira possível.
+Isso inclui lançar uma exceção ao invés de esconder o erro, criar mensagens significativas sobre o erro e evitar retornar e passar o `null` nos métodos, pois pode gerar mais erros.
+Também é interessante separar o tratamento de erros da lógica do negócio, criando um programa robusto e limpo ao mesmo tempo.
+Quando os tratamentos de erros estão declarados de maneira independente da lógica, fica mais simples entender os porquês dos erros, melhorando a manutenção do programa.
 
 ### Limites
+Ao usar códigos de terceiros, é importante ter em mente que as APIs são pensadas de maneira genérica, para atender diversas situações, mas o que normalmente se quer no programa é uma solução específica.
+Portanto, encapsular o código de terceiros para que métodos não pertinentes vazem para outras partes do programa é uma boa solução.
+Outra questão interessante, tanto para o programa quanto para a aprender ferramentas novas, é fazer testes com códigos de terceiros que podem ser adicionados no programa.
+Além de aprender de forma mais eficiente como o código funciona, ainda se garante que ele funcione do jeito esperado.
+Ter esses testes escritos é válido também quando o código terceiro evoluí, ou tirando bugs, ou acrescentando funcionalidades, e garantir que esse código ainda seja efetivo no programa.
 
 ### Testes unitários
+
 
 ### Classes
