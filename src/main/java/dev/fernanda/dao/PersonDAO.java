@@ -19,8 +19,8 @@ public class PersonDAO {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void createPerson(String name, String cpf) {
-        jdbcTemplate.update("insert into people (name, cpf) values (?, ?)", name, cpf);
+    public void createPerson(Person person) {
+        jdbcTemplate.update("insert into people (name, cpf) values (?, ?)", person.getName(), person.getCpf());
     }
 
     public List<Person> readPerson(int id) {
@@ -31,8 +31,8 @@ public class PersonDAO {
         return jdbcTemplate.query("select * from people", new PersonMapper());
     }
 
-    public void updatePerson(int id, String name, String cpf) {
-        jdbcTemplate.update("update people set name = ?, cpf = ? where id = ?", name, cpf, id);
+    public void updatePerson(Person person) {
+        jdbcTemplate.update("update people set name = ?, cpf = ? where id = ?", person.getName(), person.getCpf(), person.getId());
     }
 
     public void deletePerson(int id) {

@@ -3,7 +3,6 @@ package dev.fernanda;
 import dev.fernanda.model.Person;
 import dev.fernanda.config.DBConfig;
 import dev.fernanda.dao.PersonDAO;
-import dev.fernanda.model.enums.Options;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.Arrays;
@@ -16,13 +15,14 @@ public class Main {
         Scanner userInput = new Scanner(System.in);
 
         PersonDAO personDAO = context.getBean(PersonDAO.class);
+        Person person;
 
         String name, cpf;
         int id;
 
         boolean isAdding = true;
 
-        do{
+        do {
             System.out.println("Digite a opção desejada: ");
             System.out.println("1 - Adicionar uma pessoa ao cadastro");
             System.out.println("2 - Achar uma pessoa cadastrada");
@@ -46,7 +46,8 @@ public class Main {
                     cpf = userInput.nextLine();
                     System.out.println();
 
-                    personDAO.createPerson(name, cpf);
+                    person = new Person(name, cpf);
+                    personDAO.createPerson(person);
 
                     break;
 
@@ -67,8 +68,8 @@ public class Main {
                 case READ_ALL:
                     System.out.println("Pessoas cadastradas até o momento: ");
 
-                    for (Person person : personDAO.readPeople()) {
-                        System.out.println(person);
+                    for (Person person1 : personDAO.readPeople()) {
+                        System.out.println(person1);
                     }
 
                     System.out.println();
@@ -92,7 +93,8 @@ public class Main {
                     cpf = userInput.nextLine();
                     System.out.println();
 
-                    personDAO.updatePerson(id, name, cpf);
+                    person = new Person(id, name, cpf);
+                    personDAO.updatePerson(person);
 
                     break;
 
@@ -118,12 +120,35 @@ public class Main {
                     break;
             }
 
-        } while(isAdding);
+        } while (isAdding);
 
         userInput.close();
         context.close();
 
     }
 
+    enum Options {
+        CREATE("1"),
+        READ("2"),
+        READ_ALL("3"),
+        UPDATE("4"),
+        DELETE("5"),
+        EXIT("X"),
+        UNKNOWN("-100");
+
+        private final String value;
+
+        Options(final String value) {
+            this.value = value;
+        }
+
+        public static Options fromValue(final String value) {
+            return Arrays.stream(Options.values())
+                    .filter((option) -> value.equals(option.value))
+                    .findFirst()
+                    .orElse(UNKNOWN);
+
+        }
+    }
 
 }

@@ -9,6 +9,11 @@ public class Person {
     public Person() {
     }
 
+    public Person(String name, String cpf) {
+        this.name = name;
+        this.cpf = cpf;
+    }
+
     public Person(int id, String name, String cpf) {
         this.id = id;
         this.name = name;
