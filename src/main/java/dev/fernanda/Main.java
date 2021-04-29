@@ -1,9 +1,8 @@
 package dev.fernanda;
 
 import dev.fernanda.model.Person;
-import dev.fernanda.config.DBConfig;
 import dev.fernanda.dao.PersonDAO;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -11,12 +10,18 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DBConfig.class);
         Scanner userInput = new Scanner(System.in);
+        PersonDAO personDAO = new PersonDAO();
 
-        PersonDAO personDAO = context.getBean(PersonDAO.class);
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("org.h2.Driver");
+        dataSource.setUrl("jdbc:h2:~/mentoriaJava");
+        dataSource.setUsername("root");
+        dataSource.setPassword("password");
+
+        personDAO.setDataSource(dataSource);
+
         Person person;
-
         String name, cpf;
         int id;
 
@@ -47,7 +52,7 @@ public class Main {
                     System.out.println();
 
                     person = new Person(name, cpf);
-                    personDAO.createPerson(person);
+                    personDAO.create(person);
 
                     break;
 
@@ -94,7 +99,7 @@ public class Main {
                     System.out.println();
 
                     person = new Person(id, name, cpf);
-                    personDAO.updatePerson(person);
+                    personDAO.update(person);
 
                     break;
 
@@ -123,8 +128,6 @@ public class Main {
         } while (isAdding);
 
         userInput.close();
-        context.close();
-
     }
 
     enum Options {
