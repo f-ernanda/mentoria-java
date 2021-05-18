@@ -93,9 +93,19 @@ Além de aprender de forma mais eficiente como o código funciona, ainda se gara
 Ter esses testes escritos é válido também quando o código terceiro evoluí, ou tirando bugs, ou acrescentando funcionalidades, e garantir que esse código ainda seja efetivo no programa.
 
 ### Testes unitários
+Os testes são tão importantes quanto o código final, e devem seguir as mesmas regras vistas até então, com especial atenção na sua compreensão.
+Um teste mal escrito gera dificuldade para adaptações, deixando sua manutençãp complexa, e com o tempo abandonada, sendo descartados a longo prazo.
+É importante escrever os testes juntamente com o código de produção, idealmente exatamente antes, mantendo assim o código relevante e temporal.
 
+Os testes não precisam ser eficientes, mas sim confiáveis, rápidos e independentes.
+Para manter os testes desacoplados, o ideal é manter um conceito por função, e cada função deve ser autovalidável, ou seja, retornar `true` ou `false`.
+E como regra geral, as três leis do TDD são: um código não deve ser escrito até que um teste falhe, outro teste não deve ser escrito enquanto um apresente falha, o código escrito deve ser somente o necessário para que o teste passe.
 
 ### Classes
-
+Como convenção da linguagem, uma classe deve começar com uma lista de variáveis públicas e privadas, seguidas por métodos publicos e seus utilitários privados.
+As classes devem tem uma única responsabilidade, uma única razão para mudar, e seu nome é um forte indicador dessa responsabilidade.
+A classe deve ter alta coesão, onde seus métodos fazem uso de seus próprios atributos idealmente.
+Também devem ser abertas para extensões e fechadas para modificações, ou seja, uma classe pode extender outra e adicionar novos comportamentos, mas a original não deve ser modificada.
+E por fim, as classes devem depender de abstrações, e não de elementos concretos (princípio da inversão de controle), o que garante um baixo acoplamento.
 
 ### Sistema

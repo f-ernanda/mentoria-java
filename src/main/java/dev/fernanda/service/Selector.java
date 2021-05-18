@@ -65,8 +65,8 @@ public class Selector {
                 case FIND_ALL:
                     System.out.println("Pessoas cadastradas até o momento: ");
 
-                    for (Person person1 : personDAO.findAll()) {
-                        System.out.println(person1);
+                    for (Person person : personDAO.findAll()) {
+                        System.out.println(person);
                     }
 
                     System.out.println();
