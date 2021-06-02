@@ -42,7 +42,7 @@ public class Selector {
                     String cpf = userInput.nextLine();
                     System.out.println();
 
-                    boolean isAdded = personDAO.insert(new Person(name, cpf));
+                    boolean isAdded = personDAO.insert(new Person(name, cpf)) != null;
                     if (isAdded) System.out.println("Pessoa atualizada com sucesso");
                     else System.out.println("Não foi possível atualizar essa pessoa");
 

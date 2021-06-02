@@ -7,13 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.util.ReflectionTestUtils;
 import static org.mockito.Mockito.*;
-
-import static org.mockito.ArgumentMatchers.anyString;
-
 
 @RunWith(MockitoJUnitRunner.class)
 public class PersonDAOTest {
@@ -34,7 +29,7 @@ public class PersonDAOTest {
     @Test
     public void whenInsertNewPerson_shouldReturnAPerson() {
         Mockito.when(jdbcTemplate.update(any(String.class), eq(fernanda.getName()), eq(fernanda.getCpf()))).thenReturn(1);
-        boolean result = personDAO.insert(fernanda);
-        Assert.assertTrue(result);
+        Person result = personDAO.insert(fernanda);
+        Assert.assertSame(fernanda, result);
     }
 }

@@ -4,9 +4,14 @@ import dev.fernanda.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class PersonDAO {
@@ -14,8 +19,17 @@ public class PersonDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public boolean insert(Person person) {
-       return jdbcTemplate.update("insert into people (name, cpf) values (?, ?)", person.getName(), person.getCpf()) > 0;
+    public Person insert(Person person) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement statement = connection.prepareStatement("insert into people (name, cpf) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, person.getName());
+            statement.setString(2, person.getCpf());
+            return statement;
+            }, keyHolder);
+        int id = Objects.requireNonNull(keyHolder.getKey()).intValue();
+        person.setId(id);
+        return person;
     }
 
     public List<Person> findById(int id) {
