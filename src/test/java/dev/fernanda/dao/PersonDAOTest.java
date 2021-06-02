@@ -4,13 +4,15 @@ import dev.fernanda.model.Person;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.util.ReflectionTestUtils;
+import static org.mockito.Mockito.*;
+
+import static org.mockito.ArgumentMatchers.anyString;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -19,7 +21,7 @@ public class PersonDAOTest {
     @Mock
     JdbcTemplate jdbcTemplate;
 
-    @Autowired
+    @InjectMocks
     private PersonDAO personDAO;
 
     private Person fernanda;
@@ -30,11 +32,9 @@ public class PersonDAOTest {
     }
 
     @Test
-    @DisplayName("Should return a person when insert a person")
-    public void shouldReturnAPerson_whenInsertNewPerson() {
-        ReflectionTestUtils.setField(personDAO, "jdbcTemplate", jdbcTemplate);
-        Mockito.when(jdbcTemplate.queryForObject("insert into people (name, cpf) values (?, ?)", Boolean.class)).thenReturn(true);
+    public void whenInsertNewPerson_shouldReturnAPerson() {
+        Mockito.when(jdbcTemplate.update(any(String.class), eq(fernanda.getName()), eq(fernanda.getCpf()))).thenReturn(1);
         boolean result = personDAO.insert(fernanda);
-        Assert.assertSame(true, result);
+        Assert.assertTrue(result);
     }
 }
