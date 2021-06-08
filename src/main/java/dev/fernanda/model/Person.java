@@ -1,18 +1,17 @@
 package dev.fernanda.model;
 
-public class Person {
+import lombok.Builder;
+import lombok.Data;
 
+import java.util.HashMap;
+import java.util.Map;
+
+@Data
+@Builder
+public class Person {
     private int id;
     private String name;
     private String cpf;
-
-    public Person() {
-    }
-
-    public Person(String name, String cpf) {
-        this.name = name;
-        this.cpf = cpf;
-    }
 
     public Person(int id, String name, String cpf) {
         this.id = id;
@@ -20,28 +19,16 @@ public class Person {
         this.cpf = cpf;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public Person(String fernanda, String name) {
         this.name = name;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> values = new HashMap<>();
+        values.put("name", name);
+        values.put("cpf", cpf);
+        return values;
     }
 
     @Override

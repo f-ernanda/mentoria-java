@@ -4,6 +4,7 @@ import dev.fernanda.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -20,15 +21,8 @@ public class PersonDAO {
     private JdbcTemplate jdbcTemplate;
 
     public Person insert(Person person) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement statement = connection.prepareStatement("insert into people (name, cpf) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, person.getName());
-            statement.setString(2, person.getCpf());
-            return statement;
-            }, keyHolder);
-        int id = Objects.requireNonNull(keyHolder.getKey()).intValue();
-        person.setId(id);
+        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName("people").usingGeneratedKeyColumns("id");
+        person.setId(simpleJdbcInsert.executeAndReturnKey(person.toMap()).intValue());
         return person;
     }
 
