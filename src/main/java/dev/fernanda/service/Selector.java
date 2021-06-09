@@ -6,13 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 @Service
 public class Selector {
 
     @Autowired
-    PersonDAO personDAO;
+    PersonManager personManager;
+
+    Person person;
+    List<Person> people;
 
     public void run() {
 
@@ -42,7 +47,8 @@ public class Selector {
                     String cpf = userInput.nextLine();
                     System.out.println();
 
-                    personDAO.insert(new Person(name, cpf));
+                    person = personManager.insertPerson(name, cpf);
+                    System.out.println(person);
 
                     System.out.println();
                     break;
@@ -54,7 +60,9 @@ public class Selector {
                     int id = userInput.nextInt();
                     System.out.println();
 
-                    System.out.println(personDAO.findById(id));
+                    Optional<List<Person>> optionalPerson = personManager.findById(id);
+
+                    System.out.println(optionalPerson);
                     userInput.nextLine();
 
                     System.out.println();
@@ -63,7 +71,9 @@ public class Selector {
                 case FIND_ALL:
                     System.out.println("Pessoas cadastradas até o momento: ");
 
-                    for (Person person : personDAO.findAll()) {
+                    people = personManager.findAll();
+
+                    for (Person person : people) {
                         System.out.println(person);
                     }
 
@@ -87,7 +97,7 @@ public class Selector {
                     cpf = userInput.nextLine();
                     System.out.println();
 
-                    boolean isUpdated = personDAO.update(new Person(id, name, cpf));
+                    boolean isUpdated = personManager.updatePerson(id, name, cpf);
                     if (isUpdated) System.out.println("Pessoa atualizada com sucesso");
                     else System.out.println("Não foi possível atualizar essa pessoa");
 
@@ -102,7 +112,7 @@ public class Selector {
                     userInput.nextLine();
                     System.out.println();
 
-                    boolean isDeleted = personDAO.deleteById(id);
+                    boolean isDeleted = personManager.deletePerson(id);
                     if (isDeleted) System.out.println("Pessoa excluída com sucesso");
                     else System.out.println("Não foi possível excluir essa pessoa");
 

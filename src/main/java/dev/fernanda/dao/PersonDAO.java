@@ -5,14 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
+
 
 @Repository
 public class PersonDAO {
@@ -26,8 +23,8 @@ public class PersonDAO {
         return person;
     }
 
-    public List<Person> findById(int id) {
-        return jdbcTemplate.query("select * from people where id = ?", new Object[] {id}, BeanPropertyRowMapper.newInstance(Person.class));
+    public Optional<List<Person>> findById(int id) {
+        return Optional.of(jdbcTemplate.query("select * from people where id = ?", new Object[] {id}, BeanPropertyRowMapper.newInstance(Person.class)));
     }
 
     public List<Person> findAll() {

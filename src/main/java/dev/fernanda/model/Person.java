@@ -1,13 +1,8 @@
 package dev.fernanda.model;
 
-import lombok.Builder;
-import lombok.Data;
-
 import java.util.HashMap;
 import java.util.Map;
 
-@Data
-@Builder
 public class Person {
     private int id;
     private String name;
@@ -19,8 +14,35 @@ public class Person {
         this.cpf = cpf;
     }
 
-    public Person(String fernanda, String name) {
+    public Person(String name, String cpf) {
         this.name = name;
+        this.cpf = cpf;
+    }
+
+    public Person() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 

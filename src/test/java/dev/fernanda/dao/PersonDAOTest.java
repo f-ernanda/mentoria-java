@@ -27,14 +27,14 @@ public class PersonDAOTest {
     }
 
     @Test
-    public void whenInsertNewPerson_mustReturnAPerson() {
+    public void whenInsert_mustReturnPerson() {
         Mockito.when(jdbcTemplate.update(any(String.class), eq(fernanda.getName()), eq(fernanda.getCpf()))).thenReturn(1);
         Person result = personDAO.insert(fernanda);
         Assert.assertSame(fernanda, result);
     }
 
     @Test
-    public void whenFindById_mustReturnInvalidPerson_forEmptyDatabase() {
+    public void whenFindById_mustReturnInvalidPerson_forEmptyDatabaseOrNonExistingPerson() {
     }
 
     @Test
@@ -50,19 +50,19 @@ public class PersonDAOTest {
     }
 
     @Test
-    public void whenUpdatePerson_mustReturnFalse_forEmptyDatabaseOrNonExistingPerson() {
+    public void whenUpdate_mustReturnFalse_forEmptyDatabaseOrNonExistingPerson() {
     }
 
     @Test
-    public void whenUpdatePerson_mustReturnTrue_forExistingPerson() {
+    public void whenUpdate_mustReturnTrue_forExistingPerson() {
     }
 
     @Test
-    public void whenDeletePerson_mustReturnFalse_forEmptyDatabaseOrNonExistingPerson() {
+    public void whenDeleteById_mustReturnFalse_forEmptyDatabaseOrNonExistingPerson() {
     }
 
     @Test
-    public void whenDeletePerson_mustReturnTrue_forExistingPerson() {
+    public void whenDeleteById_mustReturnTrue_forExistingPerson() {
     }
 
 }
