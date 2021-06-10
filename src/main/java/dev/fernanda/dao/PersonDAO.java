@@ -4,11 +4,12 @@ import dev.fernanda.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
 import java.util.List;
-import java.util.Optional;
 
 
 @Repository
@@ -23,8 +24,16 @@ public class PersonDAO {
         return person;
     }
 
-    public Optional<List<Person>> findById(int id) {
-        return Optional.of(jdbcTemplate.query("select * from people where id = ?", new Object[] {id}, BeanPropertyRowMapper.newInstance(Person.class)));
+    private static final RowMapper<Person> personMapper = (ResultSet resultSet, int rowNum) -> {
+        Person person = new Person();
+        person.setId(resultSet.getInt("id"));
+        person.setName(resultSet.getString("name"));
+        person.setCpf(resultSet.getString("cpf"));
+        return person;
+    };
+
+    public Person findById(int id) {
+        return jdbcTemplate.query("select * from people where id = ?", resultSet -> resultSet.next() ? personMapper.mapRow(resultSet, 1) : null, id);
     }
 
     public List<Person> findAll() {
@@ -38,7 +47,11 @@ public class PersonDAO {
     public boolean deleteById(int id) {
         return jdbcTemplate.update("delete from people people where id = ?", id) > 0;
     }
+
+
 }
+
+
 
 
 

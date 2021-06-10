@@ -1,14 +1,10 @@
 package dev.fernanda.service;
 
-import dev.fernanda.dao.PersonDAO;
 import dev.fernanda.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
 
 @Service
 public class Selector {
@@ -16,117 +12,68 @@ public class Selector {
     @Autowired
     PersonManager personManager;
 
+    @Autowired
+    Viewer viewer;
+
     Person person;
-    List<Person> people;
 
     public void run() {
-
-        Scanner userInput = new Scanner(System.in);
         boolean isAdding = true;
-
         do {
-            System.out.println("Digite a opção desejada: ");
-            System.out.println("1 - Adicionar uma pessoa ao cadastro");
-            System.out.println("2 - Achar uma pessoa cadastrada pelo ID");
-            System.out.println("3 - Listar as pessoas cadastradas");
-            System.out.println("4 - Atualizar dados de uma pessoa cadastrada pelo ID");
-            System.out.println("5 - Excluir uma pessoa cadastrada pelo ID");
-            System.out.println("X - Sair");
-            System.out.println();
-
-            Options chosenOption = Options.fromValue(userInput.nextLine());
+            viewer.printMenu();
+            Options chosenOption = Options.fromValue(viewer.getValue());
 
             switch (chosenOption) {
                 case INSERT:
-                    System.out.println("Insira os dados: ");
-
-                    System.out.print("Nome: ");
-                    String name = userInput.nextLine();
-
-                    System.out.print("CPF: ");
-                    String cpf = userInput.nextLine();
-                    System.out.println();
-
-                    person = personManager.insertPerson(name, cpf);
-                    System.out.println(person);
-
-                    System.out.println();
+                    viewer.printInsert();
+                    person = personManager.insertPerson(viewer.getName(), viewer.getCpf());
+                    viewer.printPerson(person);
+                    viewer.printEmptyLine();
                     break;
 
                 case FIND:
-                    System.out.println("Insira o ID da pessoa a ser consultada: ");
-
-                    System.out.print("ID: ");
-                    int id = userInput.nextInt();
-                    System.out.println();
-
-                    Optional<List<Person>> optionalPerson = personManager.findById(id);
-
-                    System.out.println(optionalPerson);
-                    userInput.nextLine();
-
-                    System.out.println();
+                    viewer.printFind();
+                    person = personManager.findById(viewer.getId());
+                    viewer.printPerson(person);
+                    viewer.getUserNextLine();
+                    viewer.printEmptyLine();
                     break;
 
                 case FIND_ALL:
-                    System.out.println("Pessoas cadastradas até o momento: ");
-
-                    people = personManager.findAll();
-
-                    for (Person person : people) {
-                        System.out.println(person);
-                    }
-
-                    System.out.println();
+                    viewer.printFindAll(personManager.findAll());
+                    viewer.printEmptyLine();
                     break;
 
                 case UPDATE:
-                    System.out.println("Insira o ID da pessoa a ser atualizada: ");
-
-                    System.out.print("ID: ");
-                    id = userInput.nextInt();
-                    System.out.println();
-
-                    System.out.println("Insira os dados da pessoa a ser atualizada: ");
-
-                    System.out.print("Nome: ");
-                    userInput.nextLine();
-                    name = userInput.nextLine();
-
-                    System.out.print("CPF: ");
-                    cpf = userInput.nextLine();
-                    System.out.println();
-
-                    boolean isUpdated = personManager.updatePerson(id, name, cpf);
-                    if (isUpdated) System.out.println("Pessoa atualizada com sucesso");
-                    else System.out.println("Não foi possível atualizar essa pessoa");
-
-                    System.out.println();
+                    int id;
+                    viewer.printTryUpdate();
+                    id = viewer.getId();
+                    person = personManager.findById(id);
+                    viewer.printPerson(person);
+                    viewer.getUserNextLine();
+                    viewer.printEmptyLine();
+                    if(person == null) break;
+                    viewer.printUpdate();
+                    boolean isUpdated = personManager.updatePerson(id, viewer.getName(), viewer.getCpf());
+                    viewer.printChangedResult(isUpdated);
+                    viewer.printEmptyLine();
                     break;
 
                 case DELETE:
-                    System.out.println("Insira o ID da pessoa a ser removida: ");
-
-                    System.out.print("ID: ");
-                    id = userInput.nextInt();
-                    userInput.nextLine();
-                    System.out.println();
-
-                    boolean isDeleted = personManager.deletePerson(id);
-                    if (isDeleted) System.out.println("Pessoa excluída com sucesso");
-                    else System.out.println("Não foi possível excluir essa pessoa");
-
-                    System.out.println();
+                    viewer.printDelete();
+                    boolean isDeleted = personManager.deletePerson(viewer.getId());
+                    viewer.printChangedResult(isDeleted);
+                    viewer.getUserNextLine();
+                    viewer.printEmptyLine();
                     break;
 
                 case EXIT:
                     isAdding = false;
-                    userInput.close();
+                    viewer.closeUserInput();
                     break;
 
                 case UNKNOWN:
-                    System.out.println("Infelizmente essa opção não existe :/");
-                    System.out.println();
+                    viewer.printUnknown();
                     break;
             }
 

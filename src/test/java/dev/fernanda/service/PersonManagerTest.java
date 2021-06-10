@@ -17,7 +17,7 @@ public class PersonManagerTest {
     }
 
     @Test
-    public void whenFindByIdWithId_mustReturnInvalidPerson_forEmptyDatabaseOrNonExistingPerson() {
+    public void whenFindByIdWithId_mustReturnNull_forEmptyDatabaseOrNonExistingPerson() {
     }
 
     @Test

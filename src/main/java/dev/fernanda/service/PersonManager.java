@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonManager {
@@ -18,7 +17,7 @@ public class PersonManager {
         return personDAO.insert(new Person(name, cpf));
     }
 
-    public Optional<List<Person>> findById(int id) {
+    public Person findById(int id) {
         return personDAO.findById(id);
     }
 
@@ -27,7 +26,7 @@ public class PersonManager {
     }
 
     public boolean updatePerson(int id, String name, String cpf) {
-        if(findById(id).isPresent()) {
+        if(findById(id) != null) {
             personDAO.update(new Person(id, name, cpf));
             return true;
         }
@@ -35,7 +34,7 @@ public class PersonManager {
     }
 
     public boolean deletePerson(int id) {
-        if(findById(id).isPresent()) {
+        if(findById(id) != null) {
             personDAO.deleteById(id);
             return true;
         }
