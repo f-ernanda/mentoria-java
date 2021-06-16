@@ -15,10 +15,11 @@ public class Selector {
     @Autowired
     Viewer viewer;
 
-    Person person;
+
 
     public void run() {
         boolean isAdding = true;
+        Person person;
         do {
             viewer.printMenu();
             Options chosenOption = Options.fromValue(viewer.getValue());
@@ -26,8 +27,8 @@ public class Selector {
             switch (chosenOption) {
                 case INSERT:
                     viewer.printInsert();
-                    person = personManager.insertPerson(viewer.getName(), viewer.getCpf());
-                    viewer.printPerson(person);
+                    boolean isAdded = personManager.insertPerson(viewer.getName(), viewer.getCpf());
+                    viewer.printChangedResult(isAdded);
                     viewer.printEmptyLine();
                     break;
 

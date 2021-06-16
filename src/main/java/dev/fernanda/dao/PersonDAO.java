@@ -18,10 +18,8 @@ public class PersonDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public Person insert(Person person) {
-        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName("people").usingGeneratedKeyColumns("id");
-        person.setId(simpleJdbcInsert.executeAndReturnKey(person.toMap()).intValue());
-        return person;
+    public boolean insert(Person person) {
+        return jdbcTemplate.update("insert into people (name, cpf) values (?, ?)", person.getName(), person.getCpf()) > 0;
     }
 
     private static final RowMapper<Person> personMapper = (ResultSet resultSet, int rowNum) -> {

@@ -8,6 +8,10 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -19,52 +23,73 @@ public class PersonDAOTest {
     @InjectMocks
     private PersonDAO personDAO;
 
+
     private Person fernanda;
+    private Person venicio;
 
     @Before
     public void setUp() {
-        fernanda = new Person("Fernanda", "333.333.333-33");
+        fernanda = new Person(3,"Fernanda", "333.333.333-33");
+        venicio = new Person(4, "Venicio", "444.444.444-44");
     }
 
     @Test
     public void whenInsert_mustReturnPerson() {
-        /*
         Mockito.when(jdbcTemplate.update(any(String.class), eq(fernanda.getName()), eq(fernanda.getCpf()))).thenReturn(1);
-        Person result = personDAO.insert(fernanda);
-        Assert.assertSame(fernanda, result);
-        */
+        Assert.assertTrue(personDAO.insert(fernanda));
     }
 
     @Test
     public void whenFindById_mustReturnNull_forEmptyDatabaseOrNonExistingPerson() {
+        int id = 10;
+        Mockito.when(jdbcTemplate.update(any(String.class), eq(id))).thenReturn(0);
+        Assert.assertNull(personDAO.findById(id));
     }
 
     @Test
     public void whenFindById_mustReturnValidPerson_forExistingPerson() {
+        Mockito.when(jdbcTemplate.update(any(String.class), eq(fernanda.getId()))).thenReturn(1);
+        Assert.assertSame(fernanda, personDAO.findById(fernanda.getId()));
     }
 
     @Test
     public void whenFindAll_mustReturnEmptyList_forEmptyDatabase() {
+        Mockito.when(jdbcTemplate.update(any(String.class))).thenReturn(0);
+        List<Person> people = personDAO.findAll();
+        Assert.assertTrue((people).isEmpty());
     }
 
     @Test
     public void whenFindAll_mustReturnListOfPeople_forNonEmptyDatabase() {
+        Mockito.when(jdbcTemplate.update(any(String.class))).thenReturn(1);
+        List<Person> people = new ArrayList<>();
+        people.add(fernanda);
+        Assert.assertSame(people, personDAO.findAll());
     }
 
     @Test
     public void whenUpdate_mustReturnFalse_forEmptyDatabaseOrNonExistingPerson() {
+        Mockito.when(jdbcTemplate.update(any(String.class), eq(fernanda.getId()), eq(fernanda.getName()), eq(fernanda.getCpf()))).thenReturn(0);
+        Assert.assertFalse(personDAO.update(venicio));
     }
 
     @Test
     public void whenUpdate_mustReturnTrue_forExistingPerson() {
+        Mockito.when(jdbcTemplate.update(any(String.class), eq(fernanda.getId()), eq(fernanda.getName()), eq(fernanda.getCpf()))).thenReturn(1);
+        Assert.assertTrue(personDAO.update(fernanda));
     }
 
     @Test
     public void whenDeleteById_mustReturnFalse_forEmptyDatabaseOrNonExistingPerson() {
+        Mockito.when(jdbcTemplate.update(any(String.class), eq(fernanda.getId()))).thenReturn(0);
+        Assert.assertFalse(personDAO.deleteById(11));
     }
 
     @Test
     public void whenDeleteById_mustReturnTrue_forExistingPerson() {
+        //Mockito.when(jdbcTemplate.update(eq(INSERT), eq(id))).thenReturn(1);
+        Mockito.when(jdbcTemplate.update(any(String.class), eq(fernanda.getId()))).thenReturn(1);
+        Assert.assertTrue(personDAO.deleteById(3));
     }
 
 }

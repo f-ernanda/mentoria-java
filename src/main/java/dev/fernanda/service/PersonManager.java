@@ -13,7 +13,7 @@ public class PersonManager {
     @Autowired
     private PersonDAO personDAO;
 
-    public Person insertPerson(String name, String cpf) {
+    public boolean insertPerson(String name, String cpf) {
         return personDAO.insert(new Person(name, cpf));
     }
 
