@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -19,7 +18,7 @@ public class PersonDAO {
     private JdbcTemplate jdbcTemplate;
 
     public boolean insert(Person person) {
-        return jdbcTemplate.update("insert into people (name, cpf) values (?, ?)", person.getName(), person.getCpf()) > 0;
+        return jdbcTemplate.update(Queries.INSERT, person.getName(), person.getCpf()) > 0;
     }
 
     private static final RowMapper<Person> personMapper = (ResultSet resultSet, int rowNum) -> {
@@ -31,19 +30,19 @@ public class PersonDAO {
     };
 
     public Person findById(int id) {
-        return jdbcTemplate.query("select * from people where id = ?", resultSet -> resultSet.next() ? personMapper.mapRow(resultSet, 1) : null, id);
+        return jdbcTemplate.query(Queries.FIND_BY_ID, resultSet -> resultSet.next() ? personMapper.mapRow(resultSet, 1) : null, id);
     }
 
     public List<Person> findAll() {
-        return jdbcTemplate.query("select * from people", BeanPropertyRowMapper.newInstance(Person.class));
+        return jdbcTemplate.query(Queries.FIND_ALL, BeanPropertyRowMapper.newInstance(Person.class));
     }
 
     public boolean update(Person person) {
-        return jdbcTemplate.update("update people set name = ?, cpf = ? where id = ?", person.getName(), person.getCpf(), person.getId()) > 0;
+        return jdbcTemplate.update(Queries.UPDATE, person.getName(), person.getCpf(), person.getId()) > 0;
     }
 
     public boolean deleteById(int id) {
-        return jdbcTemplate.update("delete from people people where id = ?", id) > 0;
+        return jdbcTemplate.update(Queries.DELETE_BY_ID, id) > 0;
     }
 
 

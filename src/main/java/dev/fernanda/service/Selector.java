@@ -3,7 +3,6 @@ package dev.fernanda.service;
 import dev.fernanda.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Arrays;
 
 @Service
@@ -14,8 +13,6 @@ public class Selector {
 
     @Autowired
     Viewer viewer;
-
-
 
     public void run() {
         boolean isAdding = true;
